@@ -10,7 +10,7 @@ extractor = CSVConnector("file.csv")
 # Configure a destination (database table)
 loader = SQLConnector(db_conn, db_schema, db_table, pre_trunc=True)
 # Setup a pipe (data operation)
-pipe = ELPipe(extract=extractor, loads=[loader])
+pipe = Pipe(extract=extractor, loads=[loader])
 # Schedule the pipe to run
 pipe.run()
 ```
