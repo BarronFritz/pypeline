@@ -1,0 +1,33 @@
+[project]
+name = "pypeline"
+version = "0.1.0"
+description = "A wrapper around polars and duckdb"
+readme = "README.md"
+authors = [
+    { name = "Barron Fritz", email = "barron.vonn.fritz@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "polars>=1.30.0",
+]
+
+[project.scripts]
+pypeline = "pypeline:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.0",
+]
+
+[tool.pytest.ini_options]
+addopts = "--verbose"
+testpaths = ["tests"]
+
+[tool.pyright]
+include = ["src"]
+ignore = ["**/typings"]
+exclude = [".*", "__*", "**/typings"]
