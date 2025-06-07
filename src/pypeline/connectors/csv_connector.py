@@ -8,7 +8,7 @@ class CSVConnector(PypeConnector):
         self.path = Path(filepath)
 
     def check(self) -> bool:
-        return self.path.is_file()
+        return self.path.exists() and self.path.is_file()
 
     def read(self) -> PypeData:
         return PypeData(read_csv(self.path))
