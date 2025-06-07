@@ -4,7 +4,7 @@ from pypeline.connector import DataConnector, SQLConnector, CSVConnector
 from pathlib import Path
 
 
-def test_pipe():
+def test_sql_connector():
     # Create test data
     data = PypeData(dict({"col1": [1, 2, 3, 4, 5], "col2": ["a", "b", "c", "d", "e"]}))
     # Extract "PypeData" from data dict

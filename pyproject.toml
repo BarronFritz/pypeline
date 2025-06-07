@@ -1,6 +1,6 @@
 [project]
 name = "pypeline"
-version = "0.1.0"
+version = "0.1.1"
 description = "A wrapper around polars and duckdb"
 readme = "README.md"
 authors = [
