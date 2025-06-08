@@ -36,3 +36,6 @@ testpaths = ["tests"]
 include = ["src"]
 ignore = ["**/typings"]
 exclude = [".*", "__*", "**/typings"]
+
+[tool.ruff.lint]
+select = ["ALL"]
