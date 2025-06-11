@@ -30,11 +30,11 @@ def test_data_connector() -> None:
     test_data_2["col1"] = [6, 7, 8, 9, 10]
 
     # Test extractor data is the same as test_data
-    assert extractor.read().df.equals(data.df)  # noqa: S101
+    assert extractor.read().collect().equals(data.collect())  # noqa: S101
 
     # Not equal after write
     extractor.write(PypeData(test_data_2))
-    assert not extractor.read().df.equals(data.df)  # noqa: S101
+    assert not extractor.read().collect().equals(data.collect())  # noqa: S101
 
 
 def test_csv_connector() -> None:
@@ -60,7 +60,7 @@ def test_csv_connector() -> None:
     assert csv_connector.check()  # noqa: S101
 
     # Test extracted data is the same as loaded
-    assert csv_connector.read().df.equals(data.df)  # noqa: S101
+    assert csv_connector.read().dataframe.equals(data.dataframe)  # noqa: S101
 
     # Clean-up
     test_file.unlink()
@@ -72,8 +72,8 @@ def test_sql_connector() -> None:
     Tests init, check, read, write, and execute.
     """
     database_name = "testdb"
-    table, schema = ("dbo", "test_tbl")
-    database_table = f"{table}.{schema}"
+    schema, table = ("dbo", "test_tbl")
+    database_table = f"{schema}.{table}"
 
     # Create test data and setup connector
     test_data: dict[str, Any] = {
@@ -101,7 +101,7 @@ def test_sql_connector() -> None:
     assert sql_connector.check()  # noqa: S101
 
     # Test extracted data is the same as loaded
-    assert sql_connector.read().df.equals(data.df)  # noqa: S101
+    assert sql_connector.read().collect().equals(data.collect())  # noqa: S101
 
     # Cleanup testing environment
     if inspect(sql_connector.engine).has_table(table):

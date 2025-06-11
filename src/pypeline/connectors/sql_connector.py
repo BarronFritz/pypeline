@@ -79,7 +79,7 @@ class SQLConnector(PypeConnector):
 
         """
         with self.engine.connect() as db_conn:
-            data.df.write_database(
+            data.collect().write_database(
                 table_name=self.table,
                 connection=db_conn,
                 if_table_exists="replace",

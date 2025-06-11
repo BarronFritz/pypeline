@@ -25,7 +25,9 @@ class DataConnector(PypeConnector):
             bool: True if underlying dataframe is not empty.
 
         """
-        return not self.data.df.is_empty()
+        if self.data.is_cached():
+            return self.data.lazy_collect().head(1).collect().is_empty()
+        return not self.data.collect().is_empty()
 
     def read(self) -> PypeData:
         """Create new reference to the data.

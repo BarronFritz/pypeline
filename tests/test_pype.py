@@ -43,7 +43,7 @@ def test_pipe() -> None:
     # Assert that data from csv matches data written to csv
     data_1 = dict_extractor.read()
     data_2 = csv_extractor.read()
-    assert data_1.df.shape == data_2.df.shape  # noqa: S101
+    assert data_1.dataframe.shape == data_2.dataframe.shape  # noqa: S101
     # Cleanup Test
     csv_path.unlink()
     # Cleanup testing environment
