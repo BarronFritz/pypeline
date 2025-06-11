@@ -7,6 +7,7 @@ from sqlalchemy import inspect
 
 from pypeline.connectors.csv_connector import CSVConnector
 from pypeline.connectors.data_connector import DataConnector
+from pypeline.connectors.parquet_connector import ParquetConnector
 from pypeline.connectors.sql_connector import SQLConnector
 from pypeline.data import PypeData
 
@@ -35,6 +36,35 @@ def test_data_connector() -> None:
     # Not equal after write
     extractor.write(PypeData(test_data_2))
     assert not extractor.read().collect().equals(data.collect())  # noqa: S101
+
+
+def test_parquet_connector() -> None:
+    """Test operations for the ParquetConnector.
+
+    Tests init, check, read, and write.
+    """
+    test_data: dict[str, Any] = {
+        "col1": [1, 2, 3, 4, 5],
+        "col2": ["a", "b", "c", "d", "e"],
+    }
+    data = PypeData(test_data)
+
+    test_file = Path("tests/test_parquet_connector.parquet")
+    parquet_connector = ParquetConnector(test_file)
+
+    # Test file doesn't exist
+    assert not parquet_connector.check()  # noqa: S101
+    assert not test_file.exists()  # noqa: S101
+
+    # Test file exists after write
+    parquet_connector.write(data)
+    assert parquet_connector.check()  # noqa: S101
+
+    # Test extracted data is the same as loaded
+    assert parquet_connector.read().dataframe.equals(data.dataframe)  # noqa: S101
+
+    # Clean-up
+    test_file.unlink()
 
 
 def test_csv_connector() -> None:
