@@ -7,6 +7,7 @@ A wrapper around polars and duckdb for simple and fast ETL.
 + [x] Simple object wrapper around `polars` dataframe.
 + [x] Simple abstract interface for creating new data connectors.
 + [x] Simple EL example with multiple load destinations. 
++ [x] Data Caching for complex pipelines.
 - [ ] Pre-Load SQL Transformations with `duckdb`
 - [ ] Complex Pipe orchestration with Pipelines
     - In architecture planning phases. See Key objective for more information.
