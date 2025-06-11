@@ -29,7 +29,7 @@ class PypeData:
         # Assign a new UUID
         self.cache_id: UUID = uuid4()
         self.cache_file: Path = Path(DEFAULT_CACHE_FOLDER) / f"{self.cache_id}.parquet"
-        self.dataframe: DataFrame | None = None
+        self.dataframe: DataFrame = DataFrame()
 
         # PypeData initializer - Copy existing cache_id
         if isinstance(data, PypeData):
@@ -67,7 +67,7 @@ class PypeData:
         if self.is_cached():
             return
 
-        if self.dataframe is None:
+        if self.dataframe.is_empty():
             msg = f"{self.cache_file} is not cached, and {self.dataframe} is None."
             raise ValueError(msg)
 
@@ -77,12 +77,12 @@ class PypeData:
 
         # Ensure that cache loaded correctly, and clear the dataframe from memory
         if self.is_cached():
-            self.dataframe = None
+            self.dataframe = DataFrame()
 
     def clear_cache(self) -> None:
         """Delete local parquet file if exists."""
         if self.cache_file.exists():
-            if self.dataframe is None:
+            if self.dataframe.is_empty():
                 self.dataframe = read_parquet(self.cache_file)
             self.cache_file.unlink()
 
@@ -114,7 +114,7 @@ class PypeData:
         if self.cache_file.exists():
             return read_parquet(self.cache_file)
 
-        if self.dataframe is None:
+        if self.dataframe.is_empty():
             raise ValueError
 
         return self.dataframe
