@@ -1,6 +1,7 @@
 # Pypeline
 
 A wrapper around polars and duckdb for simple and fast ETL.
+Now with caching!
 
 
 ## Minimum Viable Product: Alpha Checklist
