@@ -50,12 +50,8 @@ class PypeData:
     def is_cached(self) -> bool:
         """Check if the data is cached."""
         if not self.cache_file.exists():
-            print("is_cached.exists = False")
             return False
-        if not self.cache_file.is_file():
-            print("is_cached.is_file = False")
-            return False
-        return True
+        return self.cache_file.is_file()
 
     def cache(self) -> None:
         """Cache data to local parquet file.
