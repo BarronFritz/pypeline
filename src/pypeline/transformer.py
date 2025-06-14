@@ -15,15 +15,15 @@ class PypeTransformer:
             data (PypeData): Data to be transformed.
 
         """
-        if not data.is_cached():
-            data.cache()
+        data.cache()
         self.data = data
 
     def transform(self, select_sql: str) -> PypeData:
         """Create a new PypeData object.
 
         Args:
-            select_sql (str): Select Statement with '{data}' as the table name.
+            select_sql (str): Select Statement with "data" as the table name.
+            Example: SELECT * FROM data WHERE col_a > 0.9
 
         Raises:
             ValueError: When select_sql does not contain 'FROM {data}'.
