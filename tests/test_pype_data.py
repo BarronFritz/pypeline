@@ -6,6 +6,7 @@ import polars as pl
 import pytest
 
 from pypeline.data import PypeData
+from tests import test_cache_dir_exists  # type: ignore  # noqa: F401, PGH003
 
 
 def test_pype_data_constructor() -> None:
@@ -20,6 +21,7 @@ def test_pype_data_constructor() -> None:
     assert data_from_pype_data.dataframe.equals(data_from_polars_df)
 
 
+@pytest.mark.depends(on="test_cache_dir_exists")
 def test_pype_data_cache() -> None:
     """Test PypeData 'cache' and 'collect' methods."""
     data: dict[str, Any] = {"col1": [1, 2, 3, 4, 5], "col2": ["a", "b", "c", "d", "e"]}

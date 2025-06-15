@@ -3,6 +3,7 @@
 from pathlib import Path
 from typing import Any
 
+import pytest
 from sqlalchemy import inspect
 
 from pypeline.connectors.csv_connector import CSVConnector
@@ -10,6 +11,10 @@ from pypeline.connectors.data_connector import DataConnector
 from pypeline.connectors.parquet_connector import ParquetConnector
 from pypeline.connectors.sql_connector import SQLConnector
 from pypeline.data import PypeData
+from tests import (
+    test_cache_dir_exists,  # type: ignore  # noqa: F401, PGH003
+    test_tests_dir_exists,  # type: ignore  # noqa: F401, PGH003
+)
 
 
 def test_data_connector() -> None:
@@ -38,6 +43,7 @@ def test_data_connector() -> None:
     assert not extractor.read().collect().equals(data.collect())
 
 
+@pytest.mark.depends(on="test_tests_dir_exists")
 def test_parquet_connector() -> None:
     """Test operations for the ParquetConnector.
 
@@ -67,6 +73,7 @@ def test_parquet_connector() -> None:
     test_file.unlink()
 
 
+@pytest.mark.depends(on="test_tests_dir_exists")
 def test_csv_connector() -> None:
     """Test operations for the CSVConnector.
 

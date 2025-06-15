@@ -2,10 +2,14 @@
 
 from typing import Any
 
+import pytest
+
 from pypeline.data import PypeData
 from pypeline.transformers.select_transformer import SelectTransformer
+from tests import test_cache_dir_exists  # type: ignore  # noqa: F401, PGH003
 
 
+@pytest.mark.depends(on="test_cache_dir_exists")
 def test_transformer() -> None:
     """Test Transformer.transform() method."""
     data_dict: dict[str, Any] = {
