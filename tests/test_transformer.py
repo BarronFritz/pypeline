@@ -3,7 +3,7 @@
 from typing import Any
 
 from pypeline.data import PypeData
-from pypeline.transformer import PypeTransformer
+from pypeline.transformers.select_transformer import SelectTransformer
 
 
 def test_transformer() -> None:
@@ -14,9 +14,12 @@ def test_transformer() -> None:
     }
     pype_data = PypeData(data_dict)
 
-    transformer = PypeTransformer(pype_data)
+    transformer = SelectTransformer(
+        data=pype_data,
+        select_sql="SELECT * FROM data WHERE col1 >= 3",
+    )
 
-    trans_data = transformer.transform("SELECT * FROM data WHERE col1 >= 3")
+    trans_data = transformer.transform()
 
     assert pype_data.cache_id != trans_data.cache_id
     assert not pype_data.collect().equals(trans_data.collect())
