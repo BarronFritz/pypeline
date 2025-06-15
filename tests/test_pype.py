@@ -32,18 +32,18 @@ def test_pipe() -> None:
     # Put operations into a pipe
     pipe1 = Pipe(dict_extractor, [csv_loader, sql_loader])
     # Assert that pipe doesn't throw an error
-    assert pipe1.run() is None  # noqa: S101
+    assert pipe1.run() is None
     # Assert csv file exists
-    assert csv_path.exists()  # noqa: S101
-    assert csv_path.is_file()  # noqa: S101
+    assert csv_path.exists()
+    assert csv_path.is_file()
     # Extract "PypeData" from csv file
     csv_extractor = CSVConnector(csv_path)
     # Assert csv_extractor confirms data is available
-    assert csv_extractor.check()  # noqa: S101
+    assert csv_extractor.check()
     # Assert that data from csv matches data written to csv
     data_1 = dict_extractor.read()
     data_2 = csv_extractor.read()
-    assert data_1.dataframe.shape == data_2.dataframe.shape  # noqa: S101
+    assert data_1.dataframe.shape == data_2.dataframe.shape
     # Cleanup Test
     csv_path.unlink()
     # Cleanup testing environment
